@@ -1,0 +1,54 @@
+version: "3"
+
+services:
+  # https://hub.docker.com/_/mysql
+  db:
+    image: mysql:5.7
+    restart: always
+    volumes:
+      - db_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+    networks:
+      - wp
+
+  # https://hub.docker.com/_/wordpress
+  wordpress:
+    depends_on:
+      - db
+    image: wordpress
+    restart: always
+    # Not mapping WP core files
+    volumes: ["./:/var/www/html/wp-content"]
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+    ports:
+      - 88:80
+      - 4433:443
+    networks:
+      - wp
+
+  # https://hub.docker.com/r/phpmyadmin/phpmyadmin
+  phpmyadmin:
+    depends_on:
+      - db
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    ports:
+      - 8080:80
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: password
+    networks:
+      - wp
+
+networks:
+  wp:
+
+volumes:
+  db_data:
