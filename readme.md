@@ -2,9 +2,13 @@
 
 The goal of this repository is to provide a starter kit for WordPress development using containers. To do this, we need to be able to run WordPres in a container locally, in test environment, and in production. We should also be able to develop WordPress as a team using source control and use automated build, test, and deploy to quickly deliver changes.
 
+We will also try to take into account good practices for setting up a WordPress development environment - <https://developer.wordpress.org/themes/getting-started/setting-up-a-development-environment/.>
+
 ## Docker Compose
 
-Docker Compose created based on <https://pawelgrzybek.com/configure-a-local-wordpress-development-using-docker/>
+Docker Compose created based on <https://pawelgrzybek.com/configure-a-local-wordpress-development-using-docker/>.
+
+The docker-compose.yml has configuration for the environment and specific versions for WordPress, MySQL, or phpMyAdmin can be set there.
 
 To start the development environment, run `docker-compose up -d` from the path of the docker-compose file.
 
